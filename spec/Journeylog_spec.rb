@@ -4,8 +4,8 @@ describe Journeylog do
 
   let(:journey_class) {double :journey_class, new: journey}
   let(:journey) {double :journey, start: station}
-  let(:entry_station) {double :entry_station}
-  let(:exit_station) {double :exit_station}
+  let(:entry_station) {double :entry_station, zone: 5}
+  let(:exit_station) {double :exit_station, zone: 2}
 
 
   it "expects journey history to be empty" do
@@ -21,7 +21,7 @@ describe Journeylog do
   it "recieves correct fare" do
     subject.start(entry_station)
     subject.finish(exit_station)
-    expect(subject.last_fare).to eq Journey::MINIMUM_FARE
+    expect(subject.last_fare).to eq 4 #standard fare based on doubles
   end
 
   it 'add a incomplete journey to journey history' do

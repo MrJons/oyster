@@ -6,8 +6,8 @@ describe Oystercard do
   subject(:card) { described_class.new}
 
   let(:journeylog) {double :journeylog, outstanding_fare: 6}
-  let(:entry_station) { double :station }
-  let(:exit_station) { double :station }
+  let(:entry_station) { double :station, zone: 4}
+  let(:exit_station) { double :station, zone: 1}
 
   before do
     card.top_up(20)
@@ -55,7 +55,7 @@ describe Oystercard do
 
     it 'deducts normal journey fare when touching out' do
       card.touch_in(entry_station)
-      expect { card.touch_out(exit_station)}.to change { card.balance }.by( -Oystercard::MINIMUM_LIMIT)
+      expect { card.touch_out(exit_station)}.to change { card.balance }.by(-4)
     end
 
     context 'touching out when card has not been touched in' do
